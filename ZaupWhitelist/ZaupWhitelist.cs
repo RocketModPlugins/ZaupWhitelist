@@ -54,6 +54,7 @@ namespace ZaupWhitelist
         }
         protected void UpdateWhitelist()
         {
+            if (!ZaupWhitelist.Instance.Configuration.AddtoGameWhitelist) return; // Do nothing as we are actively using the whitelist in game
             List<WhitelistRow> whitelist = ZaupWhitelist.Instance.Database.GetWhitelist();
             foreach (WhitelistRow row in whitelist)
             {

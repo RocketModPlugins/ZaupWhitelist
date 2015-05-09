@@ -32,18 +32,18 @@ namespace ZaupWhitelist
                 return "Removes a person to the whitelist.";
             }
         }
-        public void Execute(RocketPlayer playerid, string info)
+        public void Execute(RocketPlayer playerid, string[] info)
         {
             bool console = (playerid == null) ? true : false;
             string message = "";
-            if (String.IsNullOrEmpty(info))
+            if (info.Length == 0)
             {
                 message = ZaupWhitelist.Instance.Translate("command_generic_invalid_parameter", new object[0]);
                 this.sendMessage(message, console, playerid);
                 return;
             }
             ulong pcsteamid;
-            if (!ulong.TryParse(info, out pcsteamid))
+            if (!ulong.TryParse(info[0], out pcsteamid))
             {
                 message = ZaupWhitelist.Instance.Translate("command_generic_invalid_steamid", new object[] {
                     info
@@ -51,7 +51,7 @@ namespace ZaupWhitelist
                 this.sendMessage(message, console, playerid);
                 return;
             }
-            if (!SteamWhitelist.unwhitelist((CSteamID)pcsteamid))
+            if (!ZaupWhitelist.Instance.Database.IsWhitelisted((CSteamID)pcsteamid))
             {
                 message = ZaupWhitelist.Instance.Translate("no_player_found_unpermit", pcsteamid.ToString());
                 this.sendMessage(message, console, playerid);
@@ -60,6 +60,8 @@ namespace ZaupWhitelist
             else
             {
                 ZaupWhitelist.Instance.Database.RemWhitelist((CSteamID)pcsteamid);
+                if (ZaupWhitelist.Instance.Configuration.AddtoGameWhitelist)
+                    SteamWhitelist.unwhitelist(playerid.CSteamID);
                 message = ZaupWhitelist.Instance.Translate("default_unpermit_message", new object[] {
                 pcsteamid.ToString()
                 });

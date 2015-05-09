@@ -32,11 +32,10 @@ namespace ZaupWhitelist
                 return "Adds a person to the whitelist.";
             }
         }
-        public void Execute(RocketPlayer playerid, string info)
+        public void Execute(RocketPlayer playerid, string[] command)
         {
             bool console = (playerid == null) ? true : false;
             string message = "";
-            string[] command = Parser.getComponentsFromSerial(info, '/');
             if (command.Length != 2)
             {
                 message = ZaupWhitelist.Instance.Translate("command_generic_invalid_parameter", new object[0]);
@@ -53,7 +52,8 @@ namespace ZaupWhitelist
                 return;
             }
             CSteamID mod = (playerid == null) ? new CSteamID(11111111111111111) : playerid.Player.SteamChannel.SteamPlayer.SteamPlayerID.CSteamID;
-            SteamWhitelist.whitelist((CSteamID)pcsteamid, command[1], mod);
+            if (ZaupWhitelist.Instance.Configuration.AddtoGameWhitelist)
+                SteamWhitelist.whitelist((CSteamID)pcsteamid, command[1], mod); // We are using the game whitelist to add to game whitelist.
             ZaupWhitelist.Instance.Database.AddWhitelist((CSteamID)pcsteamid, command[1], mod);
             message = ZaupWhitelist.Instance.Translate("default_permit_message", new object[] {
                 pcsteamid.ToString(),

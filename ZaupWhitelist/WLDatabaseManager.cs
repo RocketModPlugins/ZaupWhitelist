@@ -72,7 +72,7 @@ namespace ZaupWhitelist
                 MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
                 mySqlCommand.CommandText = string.Concat(new string[]
 				{
-					"select `steamid` from `",
+					"select `steamId` from `",
 					ZaupWhitelist.Instance.Configuration.DatabaseTableName,
 					"` where `steamId` = '",
 					playerid.ToString(),

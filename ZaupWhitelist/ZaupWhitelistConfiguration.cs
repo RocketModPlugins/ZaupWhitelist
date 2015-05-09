@@ -3,7 +3,7 @@ using Rocket.RocketAPI;
 
 namespace ZaupWhitelist
 {
-    public class ZaupWhitelistConfiguration : RocketConfiguration
+    public class ZaupWhitelistConfiguration : IRocketConfiguration
     {
         public string DatabaseAddress;
 		public string DatabaseUsername;
@@ -12,7 +12,8 @@ namespace ZaupWhitelist
 		public string DatabaseTableName;
 		public int DatabasePort;
         public ulong DefaultWhitelisterSteamId;
-        public RocketConfiguration DefaultConfiguration
+        public bool AddtoGameWhitelist;
+        public IRocketConfiguration DefaultConfiguration
         {
             get
             {
@@ -24,7 +25,8 @@ namespace ZaupWhitelist
 		            DatabaseName = "unturned",
 		            DatabaseTableName = "whitelist",
 		            DatabasePort = 3306,
-                    DefaultWhitelisterSteamId = 11111111111111111
+                    DefaultWhitelisterSteamId = 11111111111111111,
+                    AddtoGameWhitelist = true
                 };
             }
         }
