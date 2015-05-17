@@ -1,9 +1,9 @@
 ﻿using System;
-using Rocket.RocketAPI;
+using Rocket.API;
 
 namespace ZaupWhitelist
 {
-    public class ZaupWhitelistConfiguration : IRocketConfiguration
+    public class ZaupWhitelistConfiguration : IRocketPluginConfiguration
     {
         public string DatabaseAddress;
 		public string DatabaseUsername;
@@ -13,7 +13,7 @@ namespace ZaupWhitelist
 		public int DatabasePort;
         public ulong DefaultWhitelisterSteamId;
         public bool AddtoGameWhitelist;
-        public IRocketConfiguration DefaultConfiguration
+        public IRocketPluginConfiguration DefaultConfiguration
         {
             get
             {

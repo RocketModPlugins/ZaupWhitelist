@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rocket.RocketAPI;
-using Rocket.Logging;
+using Rocket.API;
+using Rocket.Unturned.Logging;
+using Rocket.Unturned.Plugins;
 using SDG;
 using Steamworks;
 

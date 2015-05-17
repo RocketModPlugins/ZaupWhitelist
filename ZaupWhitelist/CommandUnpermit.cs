@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rocket.RocketAPI;
-using Rocket.Logging;
+using Rocket.API;
+using Rocket.Unturned;
+using Rocket.Unturned.Commands;
+using Rocket.Unturned.Logging;
+using Rocket.Unturned.Player;
 using SDG;
 using Steamworks;
 
@@ -78,7 +81,7 @@ namespace ZaupWhitelist
             }
             else
             {
-                RocketChatManager.Say(caller, message);
+                RocketChat.Say(caller, message);
             }
         } 
     }
