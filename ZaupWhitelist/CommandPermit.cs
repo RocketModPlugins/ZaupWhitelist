@@ -35,6 +35,13 @@ namespace ZaupWhitelist
                 return "Adds a person to the whitelist.";
             }
         }
+        public string Syntax
+        {
+            get
+            {
+                return "<steamid> <name>";
+            }
+        }
         public void Execute(RocketPlayer playerid, string[] command)
         {
             bool console = (playerid == null) ? true : false;
