@@ -42,6 +42,10 @@ namespace ZaupWhitelist
                 return "<steamid> <name>";
             }
         }
+        public List<string> Aliases
+        {
+            get { return new List<string>(); }
+        }
         public void Execute(RocketPlayer playerid, string[] command)
         {
             bool console = (playerid == null) ? true : false;
