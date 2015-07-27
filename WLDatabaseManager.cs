@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using I18N.West;
 using MySql.Data.MySqlClient;
-using Rocket.Unturned.Logging;
+
+using Rocket.Core.Logging;
 using Steamworks;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,11 @@ namespace ZaupWhitelist
             {
                 MySqlConnection mySqlConnection = this.createConnection();
                 MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-                mySqlCommand.CommandText = "show tables like '" + ZaupWhitelist.Instance.Configuration.DatabaseTableName + "'";
+                mySqlCommand.CommandText = "show tables like '" + ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName + "'";
                 mySqlConnection.Open();
                 if (mySqlCommand.ExecuteScalar() == null)
                 {
-                    mySqlCommand.CommandText = "CREATE TABLE `" + ZaupWhitelist.Instance.Configuration.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`modId` varchar(32) NOT NULL DEFAULT '11111111111111111',PRIMARY KEY (`steamId`))";
+                    mySqlCommand.CommandText = "CREATE TABLE `" + ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL,`name` varchar(32) NOT NULL,`modId` varchar(32) NOT NULL DEFAULT '11111111111111111',PRIMARY KEY (`steamId`))";
                     mySqlCommand.ExecuteNonQuery();
                 }
                 mySqlConnection.Close();
@@ -42,17 +43,17 @@ namespace ZaupWhitelist
 			MySqlConnection result = null;
 			try
 			{
-				if (ZaupWhitelist.Instance.Configuration.DatabasePort == 0)
+				if (ZaupWhitelist.Instance.Configuration.Instance.DatabasePort == 0)
 				{
-					ZaupWhitelist.Instance.Configuration.DatabasePort = 3306;
+					ZaupWhitelist.Instance.Configuration.Instance.DatabasePort = 3306;
 				}
 				result = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};", new object[]
 				{
-					ZaupWhitelist.Instance.Configuration.DatabaseAddress,
-					ZaupWhitelist.Instance.Configuration.DatabaseName,
-					ZaupWhitelist.Instance.Configuration.DatabaseUsername,
-					ZaupWhitelist.Instance.Configuration.DatabasePassword,
-					ZaupWhitelist.Instance.Configuration.DatabasePort
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseAddress,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseName,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseUsername,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabasePassword,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabasePort
 				}));
 			}
 			catch (Exception ex)
@@ -72,7 +73,7 @@ namespace ZaupWhitelist
                 mySqlCommand.CommandText = string.Concat(new string[]
 				{
 					"select `steamId` from `",
-					ZaupWhitelist.Instance.Configuration.DatabaseTableName,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName,
 					"` where `steamId` = '",
 					playerid.ToString(),
 					"';"
@@ -102,7 +103,7 @@ namespace ZaupWhitelist
                 mySqlCommand.CommandText = string.Concat(new string[]
 				{
 					"DELETE FROM `",
-					ZaupWhitelist.Instance.Configuration.DatabaseTableName,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName,
 					"` where `steamId` = '",
 					playerid.ToString(),
 					"';"
@@ -131,7 +132,7 @@ namespace ZaupWhitelist
                 mySqlCommand.CommandText = string.Concat(new string[]
 				{
 					"INSERT INTO `",
-					ZaupWhitelist.Instance.Configuration.DatabaseTableName,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName,
 					"` (steamId, name, modId) VALUES ('",
 					playerid.ToString(),
 					"', '",
@@ -164,7 +165,7 @@ namespace ZaupWhitelist
                 mySqlCommand.CommandText = string.Concat(new string[]
 				{
 					"SELECT * FROM `",
-					ZaupWhitelist.Instance.Configuration.DatabaseTableName,
+					ZaupWhitelist.Instance.Configuration.Instance.DatabaseTableName,
 					"`;"
 				});
                 mySqlConnection.Open();

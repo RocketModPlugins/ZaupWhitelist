@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Rocket.API;
+using Rocket.Core.Logging;
 using Rocket.Unturned;
+using Rocket.Unturned.Chat;
 using Rocket.Unturned.Commands;
-using Rocket.Unturned.Logging;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
@@ -14,7 +16,7 @@ namespace ZaupWhitelist
 {
     public class CommandPermit : IRocketCommand
     {
-        public bool RunFromConsole
+        public bool AllowFromConsole
         {
             get
             {
@@ -46,9 +48,14 @@ namespace ZaupWhitelist
         {
             get { return new List<string>(); }
         }
-        public void Execute(RocketPlayer playerid, string[] command)
+        public List<string> Permissions
         {
-            bool console = (playerid == null) ? true : false;
+            get { return new List<string>() { }; }
+        }
+        public void Execute(IRocketPlayer caller, string[] command)
+        {
+            bool console = (caller is ConsolePlayer);
+            UnturnedPlayer playerid = (UnturnedPlayer)caller;
             string message = "";
             if (command.Length != 2)
             {
@@ -66,7 +73,7 @@ namespace ZaupWhitelist
                 return;
             }
             CSteamID mod = (playerid == null) ? new CSteamID(11111111111111111) : playerid.Player.SteamChannel.SteamPlayer.SteamPlayerID.CSteamID;
-            if (ZaupWhitelist.Instance.Configuration.AddtoGameWhitelist)
+            if (ZaupWhitelist.Instance.Configuration.Instance.AddtoGameWhitelist)
                 SteamWhitelist.whitelist((CSteamID)pcsteamid, command[1], mod); // We are using the game whitelist to add to game whitelist.
             ZaupWhitelist.Instance.Database.AddWhitelist((CSteamID)pcsteamid, command[1], mod);
             message = ZaupWhitelist.Instance.Translate("default_permit_message", new object[] {
@@ -77,7 +84,7 @@ namespace ZaupWhitelist
             return;
         }
 
-        private void sendMessage(string message, bool console, RocketPlayer caller = null)
+        private void sendMessage(string message, bool console, UnturnedPlayer caller = null)
         {
             if (console)
             {
@@ -85,7 +92,7 @@ namespace ZaupWhitelist
             }
             else
             {
-                RocketChat.Say(caller, message);
+                UnturnedChat.Say(caller, message);
             }
         } 
     }

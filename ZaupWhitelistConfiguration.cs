@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Rocket.API;
 
 namespace ZaupWhitelist
@@ -13,22 +14,16 @@ namespace ZaupWhitelist
 		public int DatabasePort;
         public ulong DefaultWhitelisterSteamId;
         public bool AddtoGameWhitelist;
-        public IRocketPluginConfiguration DefaultConfiguration
+        public ZaupWhitelistConfiguration()
         {
-            get
-            {
-                return new ZaupWhitelistConfiguration
-                {
-                    DatabaseAddress = "localhost",
-		            DatabaseUsername = "unturned",
-		            DatabasePassword = "password",
-		            DatabaseName = "unturned",
-		            DatabaseTableName = "whitelist",
-		            DatabasePort = 3306,
-                    DefaultWhitelisterSteamId = 11111111111111111,
-                    AddtoGameWhitelist = true
-                };
-            }
+            DatabaseAddress = "localhost";
+		    DatabaseUsername = "unturned";
+		    DatabasePassword = "password";
+		    DatabaseName = "unturned";
+		    DatabaseTableName = "whitelist";
+		    DatabasePort = 3306;
+            DefaultWhitelisterSteamId = 11111111111111111;
+            AddtoGameWhitelist = true;
         }
     }
 }
