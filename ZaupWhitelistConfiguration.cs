@@ -14,7 +14,7 @@ namespace ZaupWhitelist
 		public int DatabasePort;
         public ulong DefaultWhitelisterSteamId;
         public bool AddtoGameWhitelist;
-        public ZaupWhitelistConfiguration()
+        public void LoadDefaults()
         {
             DatabaseAddress = "localhost";
 		    DatabaseUsername = "unturned";
