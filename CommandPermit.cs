@@ -16,13 +16,15 @@ namespace ZaupWhitelist
 {
     public class CommandPermit : IRocketCommand
     {
-        public bool AllowFromConsole
+
+        public AllowedCaller AllowedCaller
         {
             get
             {
-                return true;
+                return AllowedCaller.Both;
             }
         }
+
         public string Name
         {
             get
