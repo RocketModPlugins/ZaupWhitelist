@@ -74,7 +74,7 @@ namespace ZaupWhitelist
                 this.sendMessage(message, console, playerid);
                 return;
             }
-            CSteamID mod = (playerid == null) ? new CSteamID(11111111111111111) : playerid.Player.SteamChannel.SteamPlayer.SteamPlayerID.CSteamID;
+            CSteamID mod = (playerid == null) ? new CSteamID(11111111111111111) : playerid.Player.channel.owner.playerID.steamID;
             if (ZaupWhitelist.Instance.Configuration.Instance.AddtoGameWhitelist)
                 SteamWhitelist.whitelist((CSteamID)pcsteamid, command[1], mod); // We are using the game whitelist to add to game whitelist.
             ZaupWhitelist.Instance.Database.AddWhitelist((CSteamID)pcsteamid, command[1], mod);
